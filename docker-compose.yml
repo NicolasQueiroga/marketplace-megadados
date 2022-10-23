@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: >
+      sh -c "pytest api/tests &&
+             uvicorn api.src.main:app --host 0.0.0.0"
+    volumes:
+      - .:/api
+    ports:
+      - 8008:8000
+    environment:
+      - DEBUG=${DEBUG}
