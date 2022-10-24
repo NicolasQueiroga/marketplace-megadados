@@ -12,12 +12,18 @@
 1. Clone o repositório com um dos comandos abaixo:
   - ```git clone git@github.com:NicolasQueiroga/marketplace-megadados.git```
   - ```git clone https://github.com/NicolasQueiroga/marketplace-megadados.git```
+
+
+2. Copie o arquivo `.env.sample` para um novo arquivo chamado `.env`:
+  - ```cp .env.sample .env```
  
-2. Inicie o docker-desktop entrando em seu aplicativo e insira os seguintes comandos:
+ 
+3. Inicie o docker-desktop entrando em seu aplicativo e insira os seguintes comandos:
   - ```docker-compose build```
   - ```docker-compose up```
   
-3. E, por último, acesse a url ```http://localhost:8008/docs``` para ter acesso às rotas disponíveis.
+  
+4. E, por último, acesse a url ```http://localhost:8008/docs``` para ter acesso às rotas disponíveis.
 
 
 ---
