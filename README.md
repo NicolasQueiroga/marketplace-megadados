@@ -6,8 +6,7 @@
 - Guilherme Dantas Rameh
 - Nicolas Maciel Queiroga
 
-
-
+---
 ### Instruções para ativar a API localmente
 
 1. Clone o repositório com um dos comandos abaixo:
@@ -21,6 +20,7 @@
 3. E, por último, acesse a url ```http://localhost:8008/docs``` para ter acesso às rotas disponíveis.
 
 
+---
 *Para testar as rotas, basta executar o seguinte comando na raiz do projeto:*
 ```bash
 docker-compose run api pytest
