@@ -44,7 +44,7 @@ async def read_root():
         "status": "healthy"
     }
 
-@app.get("/products", status_code=201, response_model = Product, tags=["Get All Products"])
+@app.get("/products", status_code=200, response_model = Product, tags=["Get All Products"])
 async def get_products():
     return {"products": products_db}
 
@@ -52,3 +52,14 @@ async def get_products():
 @app.get("/products/{product_id}", status_code=200, response_model = Product, tags=["Get Product From ID"])
 async def get_product(product_id: int):
     return products_db[product_id - 1]
+
+@app.post("/products", status_code=200, response_model = Product, tags=["Create Product"])
+async def create_product(product: Product):
+    products_db.append(product.dict())
+    return product
+
+
+@app.put("/products/{product_id}", status_code=200, response_model = Product, tags=["Update Product"])
+async def update_product(product_id: int, product: Product):
+    products_db[product_id - 1] = product.dict()
+    return product
