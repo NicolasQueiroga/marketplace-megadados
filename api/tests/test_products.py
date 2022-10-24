@@ -46,3 +46,40 @@ def test_get_product():
         "price": 78.99,
         "quantity": 10,
     }
+
+def test_create_product():
+    response = client.post(
+        "/products",
+        json={
+            "name": "Arroz",
+            "description": "Arroz branco",
+            "price": 5.99,
+            "quantity": 23,
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "name": "Arroz",
+        "description": "Arroz branco",
+        "price": 5.99,
+        "quantity": 23,
+    }
+
+
+def test_update_product():
+    response = client.put(
+        "/products/1",
+        json={
+            "name": "Shampoo",
+            "description": "Cabelos loiros cacheados",
+            "price": 78.49,
+            "quantity": 9,
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "name": "Shampoo",
+        "description": "Cabelos loiros cacheados",
+        "price": 78.49,
+        "quantity": 9,
+    }
