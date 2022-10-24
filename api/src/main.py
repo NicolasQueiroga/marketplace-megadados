@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from .models import Product
 from .database import products_db
 from fastapi.openapi.utils import get_openapi
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
+
 
 
 app = FastAPI()
@@ -20,9 +24,18 @@ def custom_openapi():
     }
     app.openapi_schema = openapi_schema
     return app.openapi_schema
-
-
 app.openapi = custom_openapi
+
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    return await http_exception_handler(request, exc)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return await request_validation_exception_handler(request, exc)
+
 
 @app.get("/")
 async def read_root():
@@ -30,7 +43,6 @@ async def read_root():
         "message": "Welcome to the Marketplace - MEGADADOS API",
         "status": "healthy"
     }
-
 
 @app.get("/products", status_code=201, response_model = Product, tags=["Get All Products"])
 async def get_products():
