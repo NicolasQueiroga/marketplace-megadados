@@ -83,3 +83,9 @@ async def create_product(product: Product):
 async def update_product(product_id: int, product: Product):
     products_db[product_id - 1] = product.dict()
     return JSONResponse(content=product.dict(), status_code=200)
+
+
+@app.delete("/products/{product_id}", status_code=200, response_model=Product, tags=["Delete Product"])
+async def delete_product(product_id: int):
+    products_db.pop(product_id - 1)
+    return JSONResponse(status_code=200, content={"task": "delete successful"})

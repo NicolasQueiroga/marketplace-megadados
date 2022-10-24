@@ -107,3 +107,8 @@ def test_update_product():
         "price": 78.49,
         "quantity": 9,
     }
+
+def test_delete_product():
+    response = client.delete("/products/1")
+    assert response.status_code == 200
+    assert response.json() == {"task": "delete successful"}
