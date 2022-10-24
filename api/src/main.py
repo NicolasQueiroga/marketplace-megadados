@@ -20,7 +20,7 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="Marketplace - MEGADADOS",
         version="1.0.0",
-        description="Custom OpenAPI schema",
+        description="API para o Marketplace da matéria de MEGADADOS",
         routes=app.routes,
     )
     openapi_schema["info"]["x-logo"] = {
@@ -43,7 +43,7 @@ async def validation_exception_handler(request, exc):
     return await request_validation_exception_handler(request, exc)
 
 
-@app.get("/")
+@app.get("/",tags=["Main"])
 async def read_root():
     return {
         "message": "Welcome to the Marketplace - MEGADADOS API",
