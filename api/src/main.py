@@ -23,20 +23,3 @@ def custom_openapi():
 
 
 app.openapi = custom_openapi
-
-@app.get("/")
-async def read_root():
-    return {
-        "message": "Welcome to the Marketplace - MEGADADOS API",
-        "status": "healthy"
-    }
-
-
-@app.get("/products")
-async def get_products():
-    return {"products": products_db}
-
-
-@app.get("/products/{product_id}")
-async def get_product(product_id: int):
-    return products_db[product_id - 1]
