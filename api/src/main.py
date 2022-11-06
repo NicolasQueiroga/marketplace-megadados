@@ -107,5 +107,5 @@ async def update_product(product_id: int, product: Product):
     tags=["Delete Product"],
 )
 async def delete_product(product_id: int):
-    products_db.pop(product_id - 1)
+    products_db.pop(product_id)
     return JSONResponse(status_code=200, content={"task": "delete successful"})

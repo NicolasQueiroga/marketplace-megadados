@@ -97,7 +97,7 @@ def test_update_product():
     }
 
 
-# def test_delete_product():
-#     response = client.delete("/products/1")
-#     assert response.status_code == 200
-#     assert response.json() == {"task": "delete successful"}
+def test_delete_product():
+    response = client.delete("/products/1")
+    assert response.status_code == 200
+    assert response.json() == {"task": "delete successful"}
