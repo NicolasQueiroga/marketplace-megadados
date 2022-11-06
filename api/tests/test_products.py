@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from src.main import app
+from random import randint
 
 client = TestClient(app)
 
@@ -51,23 +52,27 @@ def test_get_product():
     }
 
 
-# def test_create_product():
-#     response = client.post(
-#         "/products",
-#         json={
-#             "name": "Arroz",
-#             "description": "Arroz branco",
-#             "price": 5.99,
-#             "quantity": 23,
-#         },
-#     )
-#     assert response.status_code == 200
-#     assert response.json() == {
-#         "name": "Arroz",
-#         "description": "Arroz branco",
-#         "price": 5.99,
-#         "quantity": 23,
-#     }
+def test_create_product():
+    response = client.post(
+        "/products",
+        json={
+            "name": "Arroz",
+            "description": "Arroz branco",
+            "price": 5.99,
+            "quantity": 23,
+        },
+    )
+    gen_id = response.json()["product_id"]
+    assert response.status_code == 200
+    assert response.json() == {
+        "product_id": gen_id,
+        "product": {
+            "name": "Arroz",
+            "description": "Arroz branco",
+            "price": 5.99,
+            "quantity": 23,
+        }
+    }
 
 
 # def test_update_product():

@@ -73,8 +73,17 @@ async def get_product(product_id: int):
 
 @app.post("/products", status_code=200, response_model=Product, tags=["Create Product"])
 async def create_product(product: Product):
-    products_db.append(product.dict())
-    return JSONResponse(content=product.dict(), status_code=200)
+    product_content = product.dict()
+    id_gen = 1
+    for product in products_db:
+        if product["product_id"] >= id_gen:
+            id_gen = product["product_id"]+1
+    dict = {
+        "product_id": id_gen,
+        "product": product_content
+    }
+    products_db.append(dict)
+    return JSONResponse(content=dict, status_code=200, )
 
 
 @app.put(
