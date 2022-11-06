@@ -65,7 +65,10 @@ def get_products():
     tags=["Get Product From ID"],
 )
 async def get_product(product_id: int):
-    return JSONResponse(content=products_db[product_id - 1], status_code=200)
+    for product in products_db:
+        if product["product_id"] == product_id:
+            content = product["product"]
+    return JSONResponse(content=content, status_code=200)
 
 
 @app.post("/products", status_code=200, response_model=Product, tags=["Create Product"])
