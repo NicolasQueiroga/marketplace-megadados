@@ -93,8 +93,11 @@ async def create_product(product: Product):
     tags=["Update Product"],
 )
 async def update_product(product_id: int, product: Product):
-    products_db[product_id - 1] = product.dict()
-    return JSONResponse(content=product.dict(), status_code=200)
+    for product_ in products_db:
+        if product_["product_id"] == product_id:
+            product_["product"] = product.dict()
+            break
+    return JSONResponse(content=product_, status_code=200)
 
 
 @app.delete(

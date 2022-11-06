@@ -75,23 +75,26 @@ def test_create_product():
     }
 
 
-# def test_update_product():
-#     response = client.put(
-#         "/products/1",
-#         json={
-#             "name": "Shampoo",
-#             "description": "Cabelos loiros cacheados",
-#             "price": 78.49,
-#             "quantity": 9,
-#         },
-#     )
-#     assert response.status_code == 200
-#     assert response.json() == {
-#         "name": "Shampoo",
-#         "description": "Cabelos loiros cacheados",
-#         "price": 78.49,
-#         "quantity": 9,
-#     }
+def test_update_product():
+    response = client.put(
+        "/products/1",
+        json={
+            "name": "Shampoo",
+            "description": "Cabelos loiros cacheados",
+            "price": 78.49,
+            "quantity": 9,
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "product_id": 1,
+        "product": {
+            "name": "Shampoo",
+            "description": "Cabelos loiros cacheados",
+            "price": 78.49,
+            "quantity": 9,
+        }
+    }
 
 
 # def test_delete_product():
