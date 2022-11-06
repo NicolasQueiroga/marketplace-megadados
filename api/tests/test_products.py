@@ -88,6 +88,7 @@ def test_get_product():
 #         "quantity": 9,
 #     }
 
+
 # def test_delete_product():
 #     response = client.delete("/products/1")
 #     assert response.status_code == 200
