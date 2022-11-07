@@ -1,6 +1,6 @@
 # Marketplace - MEGADADOS
 
-## Versão 1.0.0 utilizando FastAPI
+## Versão 2.0.0 utilizando FastAPI
 
 <img src="https://img.shields.io/static/v1?label=Code&message=Python&color=important&style=plastic&labelColor=black&logo=python"/>
 <img src="https://img.shields.io/static/v1?label=Code&message=FastAPI&color=important&style=plastic&labelColor=black&logo=FastAPI"/>
@@ -25,19 +25,21 @@
 
 - `cp .env.sample .env`
 
-3. Inicie o docker-desktop entrando em seu aplicativo e insira os seguintes comandos:
+3. Inicie um novo `Virtual Environment` da seguinte forma:
 
-- `docker-compose build`
+- `python -m venv venv`
 - `docker-compose up`
 
-4. E, por último, acesse a url `http://localhost:8008/docs` para ter acesso às rotas disponíveis. (OBS: Versão alternativa: `http://localhost:8008/redoc`)
+4. Ative o `Virtual Environment`
 
----
+5. Instale as dependências do projeto:
 
-_Para testar as rotas, basta executar o seguinte comando na raiz do projeto:_
+- `pip install -r requirements.txt`
 
-```bash
-docker-compose run api pytest
-```
+6. Execute o comando abaixo para iniciar a API:
+
+- `uvicorn api.src.main:app --host 0.0.0.0`
+
+7. E, por último, acesse a url `http://localhost:8008/docs` para ter acesso às rotas disponíveis. (OBS: Versão alternativa: `http://localhost:8008/redoc`)
 
 ---

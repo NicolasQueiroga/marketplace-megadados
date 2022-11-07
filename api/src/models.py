@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import relationship
 
-from database import Base
+from api.src.database import Base
 
 class Movimentacao(Base):
     __tablename__ = "movimentacao"

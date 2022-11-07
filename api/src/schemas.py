@@ -15,6 +15,7 @@ class EstoqueUpdate(EstoqueBase):
 
 
 class Estoque(EstoqueBase):
+    id: int = Field(default = 0, title="ID do produto", description="ID do produto", example=1)
     quantity: int = Field(default = 0, title="Quantidade do produto",description="Quantidade do produto", example=10)
     available: bool = Field(default = True, title="Disponibilidade do produto",description="Disponibilidade do produto", example=True)
 
@@ -23,7 +24,6 @@ class Estoque(EstoqueBase):
 
 
 class MovimentacaoBase(BaseModel):
-    movimentacao_id: int = Field(default = None, title="ID da movimentação",description="ID da movimentação", example=1)
     product_id: int = Field(default = None, title="ID do produto",description="ID do produto", example=1)
     quantity: int = Field(default = 1, title="Quantidade do produto",description="Quantidade do produto", example=1)
 
@@ -32,5 +32,6 @@ class MovimentacaoCreate(MovimentacaoBase):
 
 
 class Movimentacao(MovimentacaoBase):
+    movimentacao_id: int = Field(default = None, title="ID da movimentação",description="ID da movimentação", example=1)
     class Config:
         orm_mode = True

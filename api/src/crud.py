@@ -1,19 +1,20 @@
 from sqlalchemy.orm import Session
 
-import models, schemas
+import api.src.models
+import api.src.schemas
 
 
 def get_product(db: Session, product_id: int):
-    return db.query(models.Estoque).filter(models.Estoque.id == product_id).first()
+    return db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == product_id).first()
 
 def get_product_by_name(db: Session, name: str):
-    return db.query(models.Estoque).filter(models.Estoque.name == name).first()
+    return db.query(api.src.models.Estoque).filter(api.src.models.Estoque.name == name).first()
 
 def get_products(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Estoque).offset(skip).limit(limit).all() 
+    return db.query(api.src.models.Estoque).offset(skip).limit(limit).all() 
 
-def create_product(db: Session, product: schemas.EstoqueCreate):
-    db_product = models.Estoque(**product.dict())
+def create_product(db: Session, product: api.src.schemas.EstoqueCreate):
+    db_product = api.src.models.Estoque(**product.dict())
     try:
         db.add(db_product)
         db.commit()
@@ -23,7 +24,7 @@ def create_product(db: Session, product: schemas.EstoqueCreate):
     return db_product
 
 def delete_product(db: Session, product_id: int):
-    db_product = db.query(models.Estoque).filter(models.Estoque.id == product_id).first()
+    db_product = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == product_id).first()
 
     try:
         db.delete(db_product)
@@ -33,8 +34,8 @@ def delete_product(db: Session, product_id: int):
 
     return db_product
 
-def update_product(db: Session, product: schemas.EstoqueUpdate, product_id: int):
-    db_product = db.query(models.Estoque).filter(models.Estoque.id == product_id).first()
+def update_product(db: Session, product: api.src.schemas.EstoqueUpdate, product_id: int):
+    db_product = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == product_id).first()
     try:
         db_product.name = product.name
         db_product.description = product.description
@@ -46,8 +47,8 @@ def update_product(db: Session, product: schemas.EstoqueUpdate, product_id: int)
     db.refresh(db_product)
     return db_product
 
-def update_product_by_movimentacao(db: Session, movimentacao: schemas.MovimentacaoCreate):
-    db_product = db.query(models.Estoque).filter(models.Estoque.id == movimentacao.product_id).first()
+def update_product_by_movimentacao(db: Session, movimentacao: api.src.schemas.MovimentacaoCreate):
+    db_product = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == movimentacao.product_id).first()
     try:
         db_product.quantity += movimentacao.quantity
         db.commit()
@@ -56,8 +57,8 @@ def update_product_by_movimentacao(db: Session, movimentacao: schemas.Movimentac
     db.refresh(db_product)
     return db_product
 
-def create_movimentacao(db: Session, movimentacao: schemas.MovimentacaoCreate):
-    db_movimentacao = models.Movimentacao(**movimentacao.dict())
+def create_movimentacao(db: Session, movimentacao: api.src.schemas.MovimentacaoCreate):
+    db_movimentacao = api.src.models.Movimentacao(**movimentacao.dict())
     try:
         db.add(db_movimentacao)
         update_product_by_movimentacao(db, movimentacao)
@@ -69,19 +70,19 @@ def create_movimentacao(db: Session, movimentacao: schemas.MovimentacaoCreate):
 
 
 def get_movimentacoes(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Movimentacao).offset(skip).limit(limit).all()
+    return db.query(api.src.models.Movimentacao).offset(skip).limit(limit).all()
 
 
 def get_movimentacao(db: Session, movimentacao_id: int):
-    return db.query(models.Movimentacao).filter(models.Movimentacao.movimentacao_id == movimentacao_id).first()
+    return db.query(api.src.models.Movimentacao).filter(api.src.models.Movimentacao.movimentacao_id == movimentacao_id).first()
 
 
-def update_movimentacao(db: Session, movimentacao_id: int,  movimentacao: schemas.MovimentacaoCreate):
-    db_movimentacao_updated = models.Movimentacao(**movimentacao.dict())
-    db_movimentacao = db.query(models.Movimentacao).filter(models.Movimentacao.movimentacao_id == movimentacao_id).first()
+def update_movimentacao(db: Session, movimentacao_id: int,  movimentacao: api.src.schemas.MovimentacaoCreate):
+    db_movimentacao_updated = api.src.models.Movimentacao(**movimentacao.dict())
+    db_movimentacao = db.query(api.src.models.Movimentacao).filter(api.src.models.Movimentacao.movimentacao_id == movimentacao_id).first()
     
-    db_product_updated = db.query(models.Estoque).filter(models.Estoque.id == db_movimentacao_updated.product_id).first()
-    db_product = db.query(models.Estoque).filter(models.Estoque.id == db_movimentacao.product_id).first()
+    db_product_updated = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == db_movimentacao_updated.product_id).first()
+    db_product = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == db_movimentacao.product_id).first()
     
     try:
         db_product.quantity -= db_movimentacao.quantity
@@ -103,8 +104,8 @@ def update_movimentacao(db: Session, movimentacao_id: int,  movimentacao: schema
 
 
 def delete_movimentacao(db: Session, movimentacao_id: int):
-    db_movimentacao = db.query(models.Movimentacao).filter(models.Movimentacao.movimentacao_id == movimentacao_id).first()
-    db_product = db.query(models.Estoque).filter(models.Estoque.id == db_movimentacao.product_id).first()
+    db_movimentacao = db.query(api.src.models.Movimentacao).filter(api.src.models.Movimentacao.movimentacao_id == movimentacao_id).first()
+    db_product = db.query(api.src.models.Estoque).filter(api.src.models.Estoque.id == db_movimentacao.product_id).first()
     try:
         db_product.quantity -= db_movimentacao.quantity
         db.delete(db_movimentacao)
